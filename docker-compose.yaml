@@ -7,7 +7,7 @@ services:
       - loki
       - tempo
     ports:
-      - 3000:3000
+      - "3000:3000"
     volumes:
       - grafana_data:/var/lib/grafana
       - ./grafana/grafana.ini:/etc/grafana/grafana.ini
@@ -35,7 +35,7 @@ services:
       - '--web.console.libraries=/usr/share/prometheus/console_libraries'
       - '--web.console.templates=/usr/share/prometheus/consoles'
     ports:
-      - 9090:9090
+      - "9090:9090"
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
       - prometheus_data:/prometheus
@@ -62,6 +62,16 @@ services:
 
   tempo:
     image: grafana/tempo:1.5.0
+    command:
+      - '-config.file=/etc/tempo.yaml'
+    ports:
+      - "14268:14268"  # jaeger ingest, Jaeger - Thrift HTTP
+      - "14250:14250"  # Jaeger - GRPC
+      - "55680:55680"  # OpenTelemetry
+      - "3102:3100"    # tempo
+    volumes:
+      - ./tempo/tempo.yaml:/etc/tempo.yaml
+      - tempo_data:/data/tempo
     networks:
       - default
 
