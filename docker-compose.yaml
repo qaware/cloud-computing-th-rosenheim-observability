@@ -1,0 +1,77 @@
+version: "3"
+services:
+  grafana:
+    image: grafana/grafana:9.3.1
+    depends_on:
+      - prometheus
+      - loki
+      - tempo
+    ports:
+      - 3000:3000
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/grafana.ini:/etc/grafana/grafana.ini
+      - ./grafana/provisioning/:/etc/grafana/provisioning/
+    networks:
+      - default
+
+  grafana-database:
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_DATABASE: grafana
+      MYSQL_ROOT_PASSWORD: changeit
+    volumes:
+      - grafana_database:/var/lib/mysql
+    networks:
+      - default
+
+  prometheus:
+    image: prom/prometheus:v2.41.0
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+    ports:
+      - 9090:9090
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    networks:
+      - default
+
+  loki:
+    image: grafana/loki:2.7.1
+    command:
+      - '-config.file=/etc/loki/local-config.yaml'
+    volumes:
+      - loki_data:/loki
+    networks:
+      - default
+
+  promtail:
+    image: grafana/promtail:2.7.1
+    command:
+      - '-config.file=/etc/promtail/promtail.yaml'
+    volumes:
+      - ./promtail:/etc/promtail
+    networks:
+      - default
+
+  tempo:
+    image: grafana/tempo:1.5.0
+    networks:
+      - default
+
+volumes:
+  prometheus_data: {}
+  loki_data: {}
+  tempo_data: {}
+  grafana_data: {}
+  grafana_database: {}
+
+networks:
+  default:
+    driver: bridge
