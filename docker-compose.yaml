@@ -15,18 +15,6 @@ services:
     networks:
       - default
 
-  grafana-database:
-    image: mysql:8.0
-    command: --default-authentication-plugin=mysql_native_password
-    restart: always
-    environment:
-      MYSQL_DATABASE: grafana
-      MYSQL_ROOT_PASSWORD: changeit
-    volumes:
-      - grafana_database:/var/lib/mysql
-    networks:
-      - default
-
   prometheus:
     image: prom/prometheus:v2.41.0
     command:
