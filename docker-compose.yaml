@@ -42,10 +42,14 @@ services:
 
   promtail:
     image: grafana/promtail:2.7.1
+    depends_on:
+      - loki
     command:
       - '-config.file=/etc/promtail/promtail.yaml'
+      - '--inspect'
     volumes:
       - ./promtail:/etc/promtail
+      - tle_service_logs:/tle-service-logs
     networks:
       - default
 
@@ -64,7 +68,15 @@ services:
     networks:
       - default
 
+  tle-service:
+    image: qaware/tle-service:1.0.0
+    ports:
+      - "8080:8080"
+    volumes:
+      - tle_service_logs:/logs
+
 volumes:
+  tle_service_logs: {}
   prometheus_data: {}
   loki_data: {}
   tempo_data: {}
