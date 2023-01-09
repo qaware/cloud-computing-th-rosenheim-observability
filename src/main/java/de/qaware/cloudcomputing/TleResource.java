@@ -3,7 +3,6 @@ package de.qaware.cloudcomputing;
 import de.qaware.cloudcomputing.tle.TleMember;
 import de.qaware.cloudcomputing.tle.TleSearchResult;
 import de.qaware.cloudcomputing.tle.TleService;
-import io.micrometer.core.annotation.Counted;
 import lombok.extern.jbosslog.JBossLog;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
@@ -26,13 +25,24 @@ public class TleResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public TleSearchResult search(@QueryParam("searchString") String searchString) {
-        log.infov("Performing search for {0}", searchString);
-        return tleService.search(searchString);
+        log.tracev("Processing request GET /tle?searchString with parameter {0}", searchString);
+
+        TleSearchResult searchResult = tleService.search(searchString);
+
+        log.debugv("Retrieved search result {0} with {1} items", searchResult.getId(), searchResult.getTotalItems());
+
+        return searchResult;
     }
 
     @GET
     @Path("/{satelliteId}")
     public TleMember getRecord(@PathParam("satelliteId") int satelliteId) {
-        return tleService.getRecord(satelliteId);
+        log.tracev("Processing request GET /tle/{satelliteId} with parameter {0}", satelliteId);
+
+        TleMember record = tleService.getRecord(satelliteId);
+
+        log.debugv("Retrieved TLE record for satellite {0} (ID {1})", record.getName(), record.getSatelliteId());
+
+        return record;
     }
 }
