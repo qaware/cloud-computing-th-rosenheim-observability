@@ -46,7 +46,6 @@ services:
       - loki
     command:
       - '-config.file=/etc/promtail/promtail.yaml'
-      - '--inspect'
     volumes:
       - ./promtail:/etc/promtail
       - tle_service_logs:/tle-service-logs
