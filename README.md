@@ -31,6 +31,7 @@ This will build the Java application and a docker image. The docker image will b
 
 ```shell
 $ docker images
+
 REPOSITORY           TAG     IMAGE ID       CREATED         SIZE
 qaware/tle-service   1.0.0   55bd6d637c77   7 seconds ago   371MB
 ```
@@ -42,6 +43,12 @@ All relevant configuration can be found in each service `src/main/resources/appl
 ## The Grafana stack
 
 The Grafana stack is configured in the directories `grafana`, `loki`, `promtail`, `prometheus` and `tempo`.
+
+**NOTE**: It is important to change the permissions on the configuration files for the Grafana stack. Run the following command:
+
+```shell
+$ chmod -R o+rX grafana loki prometheus promtail tempo
+```
 
 ### Grafana
 
