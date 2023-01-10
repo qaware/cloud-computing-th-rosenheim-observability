@@ -1,51 +1,83 @@
 # tle-service Project
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+The TLE service retrieves TLE (two-line element set) data for calculating satellites trajectories from a NASA related API.
+You can learn more information on the TLE format [here](https://en.wikipedia.org/wiki/Two-line_element_set), on orbital
+mechanics [here](https://en.wikipedia.org/wiki/Orbital_mechanics) and while playing some rounds of Kerbal Space Program.
 
-If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
+This project uses Quarkus. If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
 
-## Running the application in dev mode
+## Prerequisites
 
-You can run your application in dev mode that enables live coding using:
-```shell script
-./gradlew quarkusDev
+To build and run this application, you will need the following dependencies on your system:
+
+| Name           | Version |
+|----------------|---------|
+| Docker         | *       |
+| Docker-Compose | 1.13.0+ |
+| Java           | 11      |
+
+
+## Java services
+
+### Building the application
+
+You can build the application using Gradle:
+
+```shell
+$ ./gradlew build
 ```
 
-> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at http://localhost:8080/q/dev/.
+This will build the Java application and a docker image. The docker image will be registered as `qaware/tle-service:1.0.0` within your docker daemon:
 
-## Packaging and running the application
-
-The application can be packaged using:
-```shell script
-./gradlew build
-```
-It produces the `quarkus-run.jar` file in the `build/quarkus-app/` directory.
-Be aware that it’s not an _über-jar_ as the dependencies are copied into the `build/quarkus-app/lib/` directory.
-
-The application is now runnable using `java -jar build/quarkus-app/quarkus-run.jar`.
-
-If you want to build an _über-jar_, execute the following command:
-```shell script
-./gradlew build -Dquarkus.package.type=uber-jar
+```shell
+$ docker images
+REPOSITORY           TAG     IMAGE ID       CREATED         SIZE
+qaware/tle-service   1.0.0   55bd6d637c77   7 seconds ago   371MB
 ```
 
-The application, packaged as an _über-jar_, is now runnable using `java -jar build/*-runner.jar`.
+### Configuration
 
-## Creating a native executable
+All relevant configuration can be found in each service `src/main/resources/application.properties`.
 
-You can create a native executable using: 
-```shell script
-./gradlew build -Dquarkus.package.type=native
+## The Grafana stack
+
+The Grafana stack is configured in the directories `grafana`, `loki`, `promtail`, `prometheus` and `tempo`.
+
+### Grafana
+
+Grafana is the visualization engine of the Grafana stack.
+
+The main configuration is done in `grafana.ini`.
+
+You can provision several other things automatically, like dashboards and datasources. All of this is stored in `grafana/provisioning` and deployed automatically on startup.
+
+### Loki
+
+Loki is the log storage engine of the Grafana stack. In this repository, there is only the `loki/loki.yaml` with basic storage configuration.
+
+### Promtail
+
+Promtail is the logshipper of the Grafana stack. It periodically scrapes logfiles and sends them to Loki.
+
+The configuration `promtail/promtail.yaml` scrapes the application logs from the services and pre-parses their JSON.
+
+### Prometheus
+
+Prometheus is a time series storage that can be connected to Grafana. It periodically scrapes metrics from known endpoints.
+
+The configuration file `prometheus/prometheus-yml` scrapes metrics from Prometheus itself and the Quarkus services.
+
+### Tempo
+
+Tempo stores APM and tracing data from services. It can also be connected to Grafana.
+
+## Running the services
+
+Run the applications with `docker-compose`:
+
+```shell
+$ docker-compose up
 ```
-
-Or, if you don't have GraalVM installed, you can run the native executable build in a container using: 
-```shell script
-./gradlew build -Dquarkus.package.type=native -Dquarkus.native.container-build=true
-```
-
-You can then execute your native executable with: `./build/tle-service-1.0.0-runner`
-
-If you want to learn more about building native executables, please consult https://quarkus.io/guides/gradle-tooling.
 
 ## Related Guides
 
@@ -57,23 +89,3 @@ If you want to learn more about building native executables, please consult http
 - Logging JSON ([guide](https://quarkus.io/guides/logging#json-logging)): Add JSON formatter for console logging
 - SmallRye Health ([guide](https://quarkus.io/guides/microprofile-health)): Monitor service health
 - Micrometer metrics ([guide](https://quarkus.io/guides/micrometer)): Instrument the runtime and your application with dimensional metrics using Micrometer.
-
-## Provided Code
-
-### REST Client
-
-Invoke different services through REST with JSON
-
-[Related guide section...](https://quarkus.io/guides/rest-client)
-
-### RESTEasy JAX-RS
-
-Easily start your RESTful Web Services
-
-[Related guide section...](https://quarkus.io/guides/getting-started#the-jax-rs-resources)
-
-### SmallRye Health
-
-Monitor your application's health using SmallRye Health
-
-[Related guide section...](https://quarkus.io/guides/smallrye-health)
