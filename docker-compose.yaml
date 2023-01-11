@@ -69,6 +69,10 @@ services:
 
   tle-service:
     image: qaware/tle-service:1.0.0
+    depends_on:
+      - tempo
+      - prometheus
+      - promtail
     ports:
       - "8080:8080"
     volumes:
