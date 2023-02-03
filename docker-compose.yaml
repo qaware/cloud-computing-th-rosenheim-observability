@@ -1,7 +1,7 @@
 version: "3"
 services:
   grafana:
-    image: grafana/grafana:9.3.1
+    image: grafana/grafana:9.3.6
     depends_on:
       - prometheus
       - loki
@@ -17,7 +17,7 @@ services:
       - default
 
   prometheus:
-    image: prom/prometheus:v2.41.0
+    image: prom/prometheus:v2.42.0
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
@@ -32,7 +32,7 @@ services:
       - default
 
   loki:
-    image: grafana/loki:2.7.1
+    image: grafana/loki:2.7.3
     command:
       - '-config.file=/etc/loki/local-config.yaml'
     volumes:
@@ -41,7 +41,7 @@ services:
       - default
 
   promtail:
-    image: grafana/promtail:2.7.1
+    image: grafana/promtail:2.7.3
     depends_on:
       - loki
     command:
@@ -53,7 +53,7 @@ services:
       - default
 
   tempo:
-    image: grafana/tempo:1.5.0
+    image: grafana/tempo:2.0.0
     command:
       - '-config.file=/etc/tempo.yaml'
     ports:
