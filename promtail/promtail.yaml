@@ -12,8 +12,8 @@ scrape_configs:
   - job_name: "Quarkus application logs"
     static_configs:
       - labels:
-          app: tle-service
-          __path__: /tle-service-logs/application.log
+          app: tle-fetcher
+          __path__: /tle-fetcher-logs/application.log
     pipeline_stages:
       - json:
           expressions:

@@ -48,7 +48,7 @@ services:
       - '-config.file=/etc/promtail/promtail.yaml'
     volumes:
       - ./promtail:/etc/promtail
-      - tle_service_logs:/tle-service-logs
+      - tle_fetcher_logs:/tle-fetcher-logs
     networks:
       - default
 
@@ -67,8 +67,8 @@ services:
     networks:
       - default
 
-  tle-service:
-    image: qaware/tle-service:1.0.0
+  tle-fetcher:
+    image: qaware/tle-fetcher:1.0.0
     depends_on:
       - tempo
       - prometheus
@@ -76,10 +76,10 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - tle_service_logs:/logs
+      - tle_fetcher_logs:/logs
 
 volumes:
-  tle_service_logs: {}
+  tle_fetcher_logs: {}
   prometheus_data: {}
   loki_data: {}
   tempo_data: {}

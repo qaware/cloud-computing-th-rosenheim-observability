@@ -25,5 +25,5 @@ scrape_configs:
   - job_name: "Quarkus Micrometer"
     metrics_path: /q/metrics
     static_configs:
-      - targets: ["tle-service:8080"]
+      - targets: ["tle-fetcher:8080"]
 

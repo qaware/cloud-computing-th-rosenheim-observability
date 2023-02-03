@@ -1,6 +1,6 @@
-# tle-service Project
+# tle-fetcher Project
 
-The TLE service retrieves TLE (two-line element set) data for calculating satellites trajectories from a NASA related API.
+The TLE fetcher retrieves TLE (two-line element set) data for calculating satellites trajectories from a NASA related API.
 You can learn more information on the TLE format [here](https://en.wikipedia.org/wiki/Two-line_element_set), on orbital
 mechanics [here](https://en.wikipedia.org/wiki/Orbital_mechanics) and while playing some rounds of Kerbal Space Program.
 
@@ -27,13 +27,13 @@ You can build the application using Gradle:
 $ ./gradlew build
 ```
 
-This will build the Java application and a docker image. The docker image will be registered as `qaware/tle-service:1.0.0` within your docker daemon:
+This will build the Java application and a docker image. The docker image will be registered as `qaware/tle-fetcher:1.0.0` within your docker daemon:
 
 ```shell
 $ docker images
 
 REPOSITORY           TAG     IMAGE ID       CREATED         SIZE
-qaware/tle-service   1.0.0   55bd6d637c77   7 seconds ago   371MB
+qaware/tle-fetcher   1.0.0   55bd6d637c77   7 seconds ago   371MB
 ```
 
 ### Configuration
