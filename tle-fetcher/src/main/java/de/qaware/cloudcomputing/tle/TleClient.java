@@ -8,7 +8,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
 
 @RegisterRestClient(baseUri = "https://tle.ivanstanojevic.me/api")
-public interface TleService {
+public interface TleClient {
 
     @GET
     @Path("/tle/")
