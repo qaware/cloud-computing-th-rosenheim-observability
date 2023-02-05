@@ -9,6 +9,7 @@ import io.smallrye.mutiny.Uni;
 import lombok.extern.jbosslog.JBossLog;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.validation.Valid;
 import javax.ws.rs.BeanParam;
@@ -20,6 +21,7 @@ import javax.ws.rs.core.MediaType;
 
 @JBossLog
 @Path("/tle")
+@ApplicationScoped
 public class TleResource {
 
     @Inject

@@ -34,6 +34,8 @@ dependencies {
     testCompileOnly("org.projectlombok:lombok:1.18.26")
     testAnnotationProcessor("org.projectlombok:lombok:1.18.26")
 
+    implementation("com.github.davidmoten:predict4java:1.3.1")
+
     testImplementation("io.quarkus:quarkus-junit5")
     testImplementation("io.rest-assured:rest-assured")
 }
