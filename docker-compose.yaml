@@ -59,7 +59,8 @@ services:
     ports:
       - "14268:14268"  # jaeger ingest, Jaeger - Thrift HTTP
       - "14250:14250"  # Jaeger - GRPC
-      - "55680:55680"  # OpenTelemetry
+      - "4317:4317"    # OpenTelemetry gRPC
+      - "4318:4318"    # OpenTelemetry HTTP
       - "3102:3100"    # tempo
     volumes:
       - ./tempo/tempo.yaml:/etc/tempo.yaml
