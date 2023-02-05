@@ -5,6 +5,7 @@ import de.qaware.cloudcomputing.tle.TlePropagationResult;
 import de.qaware.cloudcomputing.tle.TleSearchParameters;
 import de.qaware.cloudcomputing.tle.TleSearchResult;
 import de.qaware.cloudcomputing.tle.TleClient;
+import io.opentelemetry.instrumentation.annotations.WithSpan;
 import io.smallrye.mutiny.Uni;
 import lombok.extern.jbosslog.JBossLog;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
@@ -29,6 +30,7 @@ public class TleResource {
     TleClient tleClient;
 
     @GET
+    @WithSpan
     @Produces(MediaType.APPLICATION_JSON)
     public Uni<TleSearchResult> search(@BeanParam @Valid TleSearchParameters searchParameters) {
         log.tracev("Processing request GET /tle with search parameters {0}", searchParameters);
@@ -41,6 +43,7 @@ public class TleResource {
     }
 
     @GET
+    @WithSpan
     @Path("/{satelliteId}")
     public Uni<TleMember> getRecord(@PathParam("satelliteId") int satelliteId) {
         log.tracev("Processing request GET /tle/{satelliteId} with parameter {0}", satelliteId);
@@ -53,6 +56,7 @@ public class TleResource {
     }
 
     @GET
+    @WithSpan
     @Path("/{satelliteId}/propagate")
     public Uni<TlePropagationResult> propagate(@PathParam("satelliteId") int satelliteId) {
         log.tracev("Processing request GET /tle/{satelliteId}/propagate with parameter {0}", satelliteId);

@@ -3,10 +3,10 @@ package de.qaware.cloudcomputing.prediction;
 import com.github.amsacode.predict4java.GroundStationPosition;
 import com.github.amsacode.predict4java.PassPredictor;
 import com.github.amsacode.predict4java.SatPos;
-import com.github.amsacode.predict4java.TLE;
 import de.qaware.cloudcomputing.parse.TleParser;
 import de.qaware.cloudcomputing.tle.TleClient;
-import de.qaware.cloudcomputing.tle.TleMember;
+import io.opentelemetry.instrumentation.annotations.SpanAttribute;
+import io.opentelemetry.instrumentation.annotations.WithSpan;
 import io.smallrye.mutiny.Uni;
 import io.smallrye.mutiny.unchecked.Unchecked;
 import lombok.extern.jbosslog.JBossLog;
@@ -33,10 +33,10 @@ public class PredictionResource {
     TleParser tleParser;
 
     @GET
+    @WithSpan
     @Path("/{satelliteId}")
-    public Uni<SatPos> predict(@PathParam("satelliteId") int satelliteId) {
+    public Uni<SatPos> predict(@PathParam("satelliteId") @SpanAttribute int satelliteId) {
         GroundStationPosition groundStationPosition = new GroundStationPosition(47, 12, 400, "Rosenheim");
-
 
         return tleClient.getRecord(satelliteId)
             .onItem()

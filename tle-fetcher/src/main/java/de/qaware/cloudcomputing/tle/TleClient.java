@@ -1,5 +1,7 @@
 package de.qaware.cloudcomputing.tle;
 
+import io.opentelemetry.instrumentation.annotations.SpanAttribute;
+import io.opentelemetry.instrumentation.annotations.WithSpan;
 import io.smallrye.mutiny.Uni;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
@@ -21,5 +23,5 @@ public interface TleClient {
 
     @GET
     @Path("/tle/{satelliteId}/propagate")
-    Uni<TlePropagationResult> propagate(@PathParam("satelliteId") int satelliteId);
+    Uni<TlePropagationResult> propagate(@PathParam("satelliteId") @SpanAttribute int satelliteId);
 }
