@@ -1,20 +1,25 @@
 package de.qaware.cloudcomputing.tle;
 
+import io.smallrye.mutiny.Uni;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
+import javax.ws.rs.BeanParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
-import javax.ws.rs.QueryParam;
 
 @RegisterRestClient(baseUri = "https://tle.ivanstanojevic.me/api")
 public interface TleClient {
 
     @GET
     @Path("/tle/")
-    TleSearchResult search(@QueryParam("search") String search);
+    Uni<TleSearchResult> search(@BeanParam TleSearchParameters tleSearchParameters);
 
     @GET
     @Path("/tle/{satelliteId}")
-    TleMember getRecord(@PathParam("satelliteId") int satelliteId);
+    Uni<TleMember> getRecord(@PathParam("satelliteId") int satelliteId);
+
+    @GET
+    @Path("/tle/{satelliteId}/propagate")
+    Uni<TlePropagationResult> propagate(@PathParam("satelliteId") int satelliteId);
 }

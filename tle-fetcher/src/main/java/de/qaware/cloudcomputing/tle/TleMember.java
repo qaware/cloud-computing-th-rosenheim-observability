@@ -8,19 +8,22 @@ import java.util.Date;
 @Data
 public class TleMember {
 
+    @JsonbProperty("@context")
+    private String context;
+
     @JsonbProperty("@id")
-    String id;
+    private String id;
 
     @JsonbProperty("@type")
-    String type;
+    private String type;
 
-    int satelliteId;
+    private int satelliteId;
 
-    String name;
+    private String name;
 
-    Date date;
+    private Date date;
 
-    String line1;
+    private String line1;
 
-    String line2;
+    private String line2;
 }

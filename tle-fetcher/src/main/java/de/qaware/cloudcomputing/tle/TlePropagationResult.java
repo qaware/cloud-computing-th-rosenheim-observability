@@ -3,10 +3,9 @@ package de.qaware.cloudcomputing.tle;
 import lombok.Data;
 
 import javax.json.bind.annotation.JsonbProperty;
-import java.util.List;
 
 @Data
-public class TleSearchResult {
+public class TlePropagationResult {
 
     @JsonbProperty("@context")
     private String context;
@@ -17,7 +16,14 @@ public class TleSearchResult {
     @JsonbProperty("@type")
     private String type;
 
-    private int totalItems;
+    @JsonbProperty("tle")
+    private TleMember tleMember;
 
-    private List<TleMember> member;
+    private String algorithm;
+
+    private OrbitalVector vector;
+
+    private Geodetic geodetic;
+
+    private TleParameters parameters;
 }
