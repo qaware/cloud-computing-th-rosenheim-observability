@@ -70,6 +70,8 @@ services:
 
   tle-fetcher:
     image: qaware/tle-fetcher:1.0.0
+    environment:
+      - QUARKUS_OPENTELEMETRY_TRACER_EXPORTER_OTLP_ENDPOINT=http://tempo:4317
     depends_on:
       - tempo
       - prometheus
@@ -78,9 +80,25 @@ services:
       - "8080:8080"
     volumes:
       - tle_fetcher_logs:/logs
+    networks:
+      - default
+
+#  sky-map:
+#    image: qaware/sky-map:1.0.0
+#    depends_on:
+#      - tempo
+#      - prometheus
+#      - promtail
+#    ports:
+#      - "8088:8088"
+#    volumes:
+#      - sky_map_logs:/logs
+#    networks:
+#      - default
 
 volumes:
   tle_fetcher_logs: {}
+  sky_map_logs: {}
   prometheus_data: {}
   loki_data: {}
   tempo_data: {}

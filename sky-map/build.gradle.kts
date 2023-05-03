@@ -36,6 +36,8 @@ dependencies {
 
     implementation("com.github.davidmoten:predict4java:1.3.1")
 
+    implementation("org.apache.commons:commons-math3:3.6.1")
+
     testImplementation("io.quarkus:quarkus-junit5")
     testImplementation("io.rest-assured:rest-assured")
 }

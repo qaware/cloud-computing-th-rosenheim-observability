@@ -18,6 +18,7 @@ public interface TleClient {
     Uni<TleSearchResult> search(@BeanParam TleSearchParameters tleSearchParameters);
 
     @GET
+    @WithSpan
     @Path("/tle/{satelliteId}")
     Uni<TleMember> getRecord(@PathParam("satelliteId") int satelliteId);
 

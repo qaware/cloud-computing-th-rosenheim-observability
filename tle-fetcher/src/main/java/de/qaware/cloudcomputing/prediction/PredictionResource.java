@@ -3,8 +3,11 @@ package de.qaware.cloudcomputing.prediction;
 import com.github.amsacode.predict4java.GroundStationPosition;
 import com.github.amsacode.predict4java.PassPredictor;
 import com.github.amsacode.predict4java.SatPos;
+import com.github.amsacode.predict4java.TLE;
 import de.qaware.cloudcomputing.parse.TleParser;
 import de.qaware.cloudcomputing.tle.TleClient;
+import io.opentelemetry.api.trace.Span;
+import io.opentelemetry.api.trace.Tracer;
 import io.opentelemetry.instrumentation.annotations.SpanAttribute;
 import io.opentelemetry.instrumentation.annotations.WithSpan;
 import io.smallrye.mutiny.Uni;
@@ -31,6 +34,9 @@ public class PredictionResource {
 
     @Inject
     TleParser tleParser;
+
+    @Inject
+    Tracer tracer;
 
     @GET
     @WithSpan
