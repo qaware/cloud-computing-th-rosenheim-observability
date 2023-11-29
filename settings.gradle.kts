@@ -10,7 +10,7 @@ pluginManagement {
         id(quarkusPluginId) version quarkusPluginVersion
     }
 }
-rootProject.name="observability-from-scratch"
+rootProject.name="cloud-computing-th-rosenheim-observability"
 include("tle-fetcher")
 include("sky-map")
 
