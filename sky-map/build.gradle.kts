@@ -24,8 +24,7 @@ dependencies {
     implementation("io.quarkus:quarkus-resteasy-reactive")
     implementation("io.quarkus:quarkus-smallrye-health")
     implementation("io.quarkus:quarkus-smallrye-openapi")
-
-    implementation("io.quarkiverse.loggingjson:quarkus-logging-json:3.0.0")
+    implementation("io.quarkus:quarkus-logging-json")
 
     implementation("io.quarkus:quarkus-micrometer-registry-prometheus")
 
