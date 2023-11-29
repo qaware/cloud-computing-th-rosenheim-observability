@@ -42,12 +42,12 @@ All relevant configuration can be found in each service `src/main/resources/appl
 
 ## The Grafana stack
 
-The Grafana stack is configured in the directories `grafana`, `loki`, `promtail`, `prometheus` and `tempo`.
+The Grafana stack is configured in the directories `grafana`, `loki`, `promtail`, `mimir` and `tempo`.
 
 **NOTE**: It is important to change the permissions on the configuration files for the Grafana stack. Run the following command:
 
 ```shell
-$ chmod -R o+rX grafana loki prometheus promtail tempo
+$ chmod -R o+rX grafana loki mimir promtail tempo
 ```
 
 ### Grafana
@@ -68,11 +68,13 @@ Promtail is the logshipper of the Grafana stack. It periodically scrapes logfile
 
 The configuration `promtail/promtail.yaml` scrapes the application logs from the services and pre-parses their JSON.
 
-### Prometheus
+### Mimir
 
-Prometheus is a time series storage that can be connected to Grafana. It periodically scrapes metrics from known endpoints.
+Mimir is a time series storage that can be connected to Grafana.
 
-The configuration file `prometheus/prometheus-yml` scrapes metrics from Prometheus itself and the Quarkus services.
+### Grafana Agent
+
+Grafana Agent periodically scrapes metrics from known endpoints and sends it to Grafana Mimir.
 
 ### Tempo
 
