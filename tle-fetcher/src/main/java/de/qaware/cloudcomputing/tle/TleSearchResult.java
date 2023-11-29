@@ -9,15 +9,15 @@ import java.util.List;
 public class TleSearchResult {
 
     @JsonbProperty("@context")
-    private String context;
+    String context;
 
     @JsonbProperty("@id")
-    private String id;
+    String id;
 
     @JsonbProperty("@type")
-    private String type;
+    String type;
 
-    private int totalItems;
+    int totalItems;
 
-    private List<TleMember> member;
+    List<TleMember> member;
 }
