@@ -4,8 +4,8 @@ import com.github.amsacode.predict4java.*;
 import de.qaware.cloudcomputing.tle.TleMember;
 import io.opentelemetry.instrumentation.annotations.WithSpan;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import java.sql.Date;
 import java.time.LocalDate;
 

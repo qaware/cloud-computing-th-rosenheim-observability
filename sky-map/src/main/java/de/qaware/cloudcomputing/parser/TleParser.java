@@ -3,7 +3,7 @@ package de.qaware.cloudcomputing.parser;
 import com.github.amsacode.predict4java.TLE;
 import de.qaware.cloudcomputing.tle.TleMember;
 
-import javax.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
 public class TleParser {
